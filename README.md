@@ -50,7 +50,7 @@ The system is designed with these key principles:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/perception-system.git
+git clone https://github.com/akramsalim/perception-kit.git
 cd perception-system
 ```
 
