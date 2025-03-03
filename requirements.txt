@@ -1,0 +1,26 @@
+# requirements.txt
+
+# Core dependencies
+numpy>=1.19.0
+opencv-python>=4.5.0
+torch>=1.9.0
+torchvision>=0.10.0
+pyyaml>=5.1
+matplotlib>=3.3.0
+pillow>=8.0.0
+scipy>=1.5.0
+filterpy>=1.4.5  # For Kalman filtering in tracking
+
+# For YOLOv5 detector
+yolov5>=6.0.0
+
+# For depth estimation using MiDaS
+timm>=0.4.12
+
+# For visualization and notebooks
+jupyter>=1.0.0
+ipywidgets>=7.6.0
+
+# For testing
+pytest>=6.0.0
+pytest-cov>=2.12.0

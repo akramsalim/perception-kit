@@ -1,0 +1,85 @@
+# config/perception_config.yaml
+
+# Main perception pipeline configuration
+pipeline:
+  # Processing options
+  max_fps: 30  # Cap processing at maximum FPS
+  skip_frames: 0  # Process every frame (0 = no skipping)
+  input_size: [640, 480]  # Resize input to this size for processing
+
+# Detection configuration
+detection:
+  model: "yolo"  # Options: "yolo", "ssd", "faster_rcnn"
+  confidence_threshold: 0.25
+  nms_threshold: 0.45
+  filter_classes: []  # Empty list means detect all classes
+  # filter_classes: ["person", "car", "truck"]  # Only detect these classes
+
+# Tracking configuration
+tracking:
+  enabled: true
+  algorithm: "sort"  # Options: "sort", "deep_sort"
+  max_age: 30  # Maximum frames to keep lost tracks
+  min_hits: 3  # Minimum hits to confirm a track
+  iou_threshold: 0.3  # IOU threshold for matching
+
+# Depth estimation configuration
+depth:
+  enabled: true
+  model: "midas_small"  # Options: "midas_small", "midas_large"
+  apply_smoothing: true
+  smoothing_factor: 0.7
+
+# Fusion configuration
+fusion:
+  enabled: true
+  enrich_attributes: true  # Add additional attributes like color and size
+
+# Visualization configuration
+visualization:
+  show_detections: true
+  show_tracks: true
+  show_depth: true
+  text_scale: 0.5
+  box_thickness: 2
+  track_history_length: 20
+  depth_alpha: 0.3  # Alpha value for depth map visualization
+
+
+# config/models_config.yaml
+
+# YOLOv5 model configuration
+yolo:
+  model_size: "s"  # Options: "n", "s", "m", "l", "x"
+  weights: "pretrained"  # Or path to custom weights
+  img_size: 640
+  device: "cuda"  # Options: "cuda", "cpu"
+  optimize: true  # Apply optimization for inference speed
+
+# SSD model configuration (alternative detector)
+ssd:
+  model: "ssd_mobilenet_v2"
+  weights: "pretrained"
+  confidence_threshold: 0.5
+  device: "cuda"
+
+# MiDaS depth estimation configuration
+midas:
+  model_type: "MiDaS_small"  # Options: "MiDaS_small", "DPT_Large", "DPT_Hybrid"
+  device: "cuda"
+  optimize: true
+
+# SORT tracker configuration
+sort:
+  max_age: 30
+  min_hits: 3
+  iou_threshold: 0.3
+
+# DeepSORT tracker configuration (alternative tracker)
+deep_sort:
+  max_age: 30
+  n_init: 3
+  nms_max_overlap: 1.0
+  max_cosine_distance: 0.2
+  nn_budget: 100
+  device: "cuda"
