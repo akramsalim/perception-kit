@@ -166,7 +166,7 @@ class SORTTracker(Tracker):
             'max_age': 10,       # Max frames to keep track alive without matches
             'min_hits': 3,       # Min hits to confirm a track
             'iou_threshold': 0.3, # IOU threshold for matching
-            **config or {}
+            **(config or {})
         }
         
         self.trackers = []
