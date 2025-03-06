@@ -1,12 +1,13 @@
 # perception/detection/yolo_detector.py
 
 import os
+import sys
 import numpy as np
 import torch
 import cv2
 import logging
 from typing import List, Dict, Tuple, Optional
-
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 from perception.detection.detector import Detector
 
 logger = logging.getLogger(__name__)
@@ -40,7 +41,7 @@ class YOLODetector(Detector):
             'conf_threshold': 0.25,
             'nms_threshold': 0.45,
             'img_size': 640,
-            **config or {}
+            **(config or {})
         }
         
         self.model = None
@@ -134,3 +135,32 @@ class YOLODetector(Detector):
         """Preprocess frame for YOLOv5."""
         # YOLOv5 handles preprocessing internally, so we just return the frame
         return frame
+    
+
+if __name__ == "__main__":
+    # Simple test code
+    print("Testing YOLODetector...")
+    
+    # Create detector
+    detector = YOLODetector()
+    
+    # Try loading an image and running detection
+    try:
+        # You can replace with any image path
+        test_image_path = "../test_images/test.jpg"
+        if os.path.exists(test_image_path):
+            image = cv2.imread(test_image_path)
+            if image is not None:
+                print(f"Loaded image of shape {image.shape}")
+                detections = detector.detect(image)
+                print(f"Found {len(detections)} objects")
+                for i, det in enumerate(detections):
+                    print(f"  {i+1}. {det['class_name']} ({det['score']:.2f})")
+            else:
+                print(f"Failed to load image: {test_image_path}")
+        else:
+            print("Running without test image - just initializing model")
+            detector.initialize()
+            print("Initialization successful")
+    except Exception as e:
+        print(f"Error during testing: {e}")
