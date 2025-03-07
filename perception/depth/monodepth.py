@@ -35,7 +35,7 @@ class MonocularDepthEstimator(DepthEstimator):
             'model_type': 'MiDaS_small',  # 'MiDaS_small', 'DPT_Large', 'DPT_Hybrid'
             'device': 'cuda' if torch.cuda.is_available() else 'cpu',
             'optimize': True,
-            **config or {}
+            **(config or {})
         }
         
         self.model = None
